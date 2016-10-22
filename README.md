@@ -11,7 +11,12 @@ TODO
 Role Variables
 --------------
 
-TODO
+javascript_webstorm_install: true
+javascript_webstorm_version: 2016.2.4
+javascript_webstorm_build: 162.2228.20
+
+javascript_node_install: true
+javascript_node_version: v4.6.1
 
 Dependencies
 ------------
@@ -24,7 +29,7 @@ Example Playbook
 ```
 - hosts: servers
   roles:
-      - { role: kurron.javascript-developer, python_pycharm_version: 2016.2.3 }
+      - { role: kurron.javascript-developer, javascript_node_version: v4.6.1 }
 ```
 
 License
