@@ -1,4 +1,14 @@
 ---
+- name: Create privledged folders
+  become: yes
+  file:
+      path: "{{item}}"
+      state: directory
+      mode: 0755
+      recurse: yes
+  with_items:
+  - "{{ansible_user_dir}}/{{javascript_software_directory}}"
+
 - name: Create unprivledged folders
   become: no
   file:
@@ -56,5 +66,61 @@
       group: "{{ansible_user_gid}}"
       mode: 0555
   when: javascript_webstorm_install
+
+- name: Download NodeJS Tarball
+  become: yes
+  get_url:
+      url: "http://nodejs.org/dist/{{javascript_node_version}}/node-{{javascript_node_version}}-linux-x64.tar.gz"
+      dest: "{{ansible_user_dir}}/{{javascript_download_directory}}/node-{{javascript_node_version}}.tar.gz"
+      mode: 0444
+  when: javascript_node_install
+
+- name: Uncompress NodeJS Tarball
+  become: yes
+  unarchive:
+      src: "{{ansible_user_dir}}/{{javascript_download_directory}}/node-{{javascript_node_version}}.tar.gz"
+      dest: "/opt"
+      copy: no
+      owner: "{{ansible_user_uid}}"
+      group: "{{ansible_user_gid}}"
+      mode: 0555
+      creates: "/opt/node-{{javascript_node_version}}-linux-x64/LICENSE"
+  when: javascript_node_install
+
+- name: Create Softlink To Node
+  become: yes
+  file:
+      src: "/opt/node-{{javascript_node_version}}-linux-x64/bin/node"
+      dest: "/usr/local/bin/node"
+      owner: "{{ansible_user_uid}}"
+      group: "{{ansible_user_gid}}"
+      state: link
+  when: javascript_node_install
+
+- name: Create Softlink To NPM
+  become: yes
+  file:
+      src: "/opt/node-{{javascript_node_version}}-linux-x64/bin/npm"
+      dest: "/usr/local/bin/npm"
+      owner: "{{ansible_user_uid}}"
+      group: "{{ansible_user_gid}}"
+      state: link
+  when: javascript_node_install
+
+- name: Update global NPM packages
+  become: yes
+  npm:
+      name: "{{item}}"
+      global: yes
+      state: latest
+  with_items:
+  - "npm"
+  - "yo"
+  - "bower"
+  - "grunt-cli"
+  - "gulp-cli"
+  - "generator-jhipster"
+  - "nvm"
+  when: javascript_node_install
 
 
