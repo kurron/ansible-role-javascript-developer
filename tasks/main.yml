@@ -7,7 +7,7 @@
       mode: 0755
       recurse: yes
   with_items:
-  - "{{ansible_user_dir}}/{{python_software_directory}}"
+  - "{{ansible_user_dir}}/{{javascript_software_directory}}"
 
 - name: Install Required Packages
   become: yes
@@ -16,63 +16,45 @@
       state: present
   with_items:
   - "curl"
-  when: ansible_distribution == "Ubuntu"
 
-- name: Download Pycharm Tarball
+- name: Download WebStorm Tarball
   become: no
   get_url:
-      url: "https://download.jetbrains.com/python/pycharm-professional-{{python_pycharm_version}}.tar.gz"
-      dest: "{{ansible_user_dir}}/{{python_download_directory}}/pycharm-{{python_pycharm_version}}.tar.gz"
+      url: "https://download.jetbrains.com/webstorm/WebStorm-{{javascript_webstorm_version}}.tar.gz"
+      dest: "{{ansible_user_dir}}/{{javascript_download_directory}}/webstorm-{{javascript_webstorm_version}}.tar.gz"
       mode: 0444
-  when: python_pycharm_install
+  when: javascript_webstorm_install
 
-- name: Uncompress IntelliJ IDEA Tarball
+- name: Uncompress WebStorm Tarball
   become: no
   unarchive:
-      src: "{{ansible_user_dir}}/{{python_download_directory}}/pycharm-{{python_pycharm_version}}.tar.gz"
-      dest: "{{ansible_user_dir}}/{{python_software_directory}}"
+      src: "{{ansible_user_dir}}/{{javascript_download_directory}}/webstorm-{{javascript_webstorm_version}}.tar.gz"
+      dest: "{{ansible_user_dir}}/{{javascript_software_directory}}"
       copy: no
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       mode: 0555
-      creates: "{{ansible_user_dir}}/{{python_software_directory}}/pycharm-{{python_pycharm_version}}/build.txt"
-  when: python_pycharm_install
+      creates: "{{ansible_user_dir}}/{{javascript_software_directory}}/WebStorm-{{javascript_webstorm_build}}/build.txt"
+  when: javascript_webstorm_install
 
-- name: Create Softlink To Pycharm
+- name: Create Softlink To WebStorm
   become: no
   file:
-      src: "{{ansible_user_dir}}/{{python_software_directory}}/pycharm-{{python_pycharm_version}}"
-      dest: "{{ansible_user_dir}}/{{python_software_directory}}/pycharm"
+      src: "{{ansible_user_dir}}/{{javascript_software_directory}}/WebStorm-{{javascript_webstorm_build}}"
+      dest: "{{ansible_user_dir}}/{{javascript_software_directory}}/webstorm"
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       state: link
-  when: python_pycharm_install
+  when: javascript_webstorm_install
 
-- name: Create Desktop Icon For Pycharm
+- name: Create Desktop Icon For WebStorm
   become: no
   template:
-      src: "templates/pycharm.desktop.j2"
-      dest: "{{ansible_user_dir}}/Desktop/pycharm.desktop"
+      src: "templates/webstorm.desktop.j2"
+      dest: "{{ansible_user_dir}}/Desktop/webstorm.desktop"
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       mode: 0555
-  when: python_pycharm_install
+  when: javascript_webstorm_install
 
-- name: Install Required Packages
-  become: yes
-  package:
-      name: "{{item}}"
-      state: present
-  with_items:
-  - "python-pip"
-  - "python-dev"
 
-- name: Install Python Packages
-  become: yes
-  pip:
-      name: "{{item}}"
-      state: latest
-  with_items:
-  - "pip"
-  - "setuptools"
-  - "virtualenv"

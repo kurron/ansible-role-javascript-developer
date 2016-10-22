@@ -1,7 +1,8 @@
 ---
-python_download_directory: Downloads
-python_software_directory: Software
+javascript_download_directory: Downloads
+javascript_software_directory: Software
 
-python_pycharm_install: true
-python_pycharm_version: 2016.2.3
+javascript_webstorm_install: true
+javascript_webstorm_version: 2016.2.4
+javascript_webstorm_build: 162.2228.20
 
