@@ -1,32 +1,4 @@
 ---
-- name: Create privledged folders
-  become: yes
-  file:
-      path: "{{item}}"
-      state: directory
-      mode: 0755
-      recurse: yes
-  with_items:
-  - "{{ansible_user_dir}}/{{javascript_software_directory}}"
-
-- name: Create unprivledged folders
-  become: no
-  file:
-      path: "{{item}}"
-      state: directory
-      mode: 0755
-      recurse: yes
-  with_items:
-  - "{{ansible_user_dir}}/{{javascript_software_directory}}"
-
-- name: Install Required Packages
-  become: yes
-  package:
-      name: "{{item}}"
-      state: present
-  with_items:
-  - "curl"
-
 - name: Download WebStorm Tarball
   become: no
   get_url:
@@ -39,19 +11,19 @@
   become: no
   unarchive:
       src: "{{ansible_user_dir}}/{{javascript_download_directory}}/webstorm-{{javascript_webstorm_version}}.tar.gz"
-      dest: "{{ansible_user_dir}}/{{javascript_software_directory}}"
+      dest: "{{ansible_user_dir}}/{{base_software_directory}}"
       copy: no
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       mode: 0555
-      creates: "{{ansible_user_dir}}/{{javascript_software_directory}}/WebStorm-{{javascript_webstorm_build}}/build.txt"
+      creates: "{{ansible_user_dir}}/{{base_software_directory}}/WebStorm-{{javascript_webstorm_build}}/build.txt"
   when: javascript_webstorm_install
 
 - name: Create Softlink To WebStorm
   become: no
   file:
-      src: "{{ansible_user_dir}}/{{javascript_software_directory}}/WebStorm-{{javascript_webstorm_build}}"
-      dest: "{{ansible_user_dir}}/{{javascript_software_directory}}/webstorm"
+      src: "{{ansible_user_dir}}/{{base_software_directory}}/WebStorm-{{javascript_webstorm_build}}"
+      dest: "{{ansible_user_dir}}/{{base_software_directory}}/webstorm"
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       state: link
@@ -122,5 +94,4 @@
   - "generator-jhipster"
   - "nvm"
   when: javascript_node_install
-
 
