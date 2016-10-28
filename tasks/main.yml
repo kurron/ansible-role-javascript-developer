@@ -57,7 +57,7 @@
   when: javascript_webstorm_share_jdk
 
 - name: Download NodeJS Tarball
-  become: yes
+  become: no
   get_url:
       url: "http://nodejs.org/dist/{{javascript_node_version}}/node-{{javascript_node_version}}-linux-x64.tar.gz"
       dest: "{{ansible_user_dir}}/{{base_download_directory}}/node-{{javascript_node_version}}.tar.gz"
