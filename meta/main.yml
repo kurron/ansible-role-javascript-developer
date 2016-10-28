@@ -34,6 +34,7 @@ galaxy_info:
       - development
       - javascript
       - ecmascript
+      - jetbrains
 
 dependencies:
     - { role: kurron.jdk }
