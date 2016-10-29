@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ronald D. Kurr
-  description: Long time slinger of code.
+  description: JavaScript IDE and command-line tools.
   company: jvmguy.com
 
   license: Apache 2
@@ -35,6 +35,9 @@ galaxy_info:
       - javascript
       - ecmascript
       - jetbrains
+      - webstorm
+      - node
+      - npm
 
 dependencies:
     - { role: kurron.jdk }
