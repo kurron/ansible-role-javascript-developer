@@ -1,7 +1,7 @@
 ---
 javascript_webstorm_install: true
-javascript_webstorm_version: 2016.3.1
-javascript_webstorm_build: 163.7743.51
+javascript_webstorm_version: 2016.3.2
+javascript_webstorm_build: 163.9166.30
 javascript_webstorm_share_jdk: true
 
 javascript_node_install: true
