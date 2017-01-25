@@ -96,6 +96,11 @@
       state: link
   when: javascript_node_install
 
+- name: Reset Node Prefix
+  become: no
+  command: "npm config set prefix /usr/local"
+  when: javascript_node_install
+
 - name: Update global NPM packages
   become: yes
   npm:
@@ -104,7 +109,6 @@
       global: yes
       state: latest
   with_items:
-  - "npm"
   - "yo"
   - "bower"
   - "grunt-cli"
