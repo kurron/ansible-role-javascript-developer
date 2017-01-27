@@ -41,3 +41,4 @@ galaxy_info:
 
 dependencies:
     - { role: kurron.jdk }
+    - { role: kurron.node-js }
