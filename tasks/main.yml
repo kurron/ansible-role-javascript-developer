@@ -68,3 +68,4 @@
   - "grunt-cli"
   - "gulp-cli"
   - "generator-jhipster"
+  - "serverless"
