@@ -52,7 +52,7 @@
 - name: Remove WebStorm's Embedded JDK
   become: no
   file:
-      path: "{{ansible_user_dir}}/{{base_software_directory}}/webstorm/jre"
+      path: "{{ansible_user_dir}}/{{base_software_directory}}/webstorm/jre64"
       state: absent
   when: javascript_webstorm_share_jdk
 
