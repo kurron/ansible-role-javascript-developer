@@ -56,6 +56,8 @@
       state: absent
   when: javascript_webstorm_share_jdk
 
+# - "generator-jhipster"
+
 - name: Update global NPM packages
   become: yes
   npm:
@@ -67,5 +69,4 @@
   - "bower"
   - "grunt-cli"
   - "gulp-cli"
-# - "generator-jhipster"
   - "serverless"
