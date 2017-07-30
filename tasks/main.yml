@@ -67,5 +67,5 @@
   - "bower"
   - "grunt-cli"
   - "gulp-cli"
-  - "generator-jhipster"
+# - "generator-jhipster"
   - "serverless"
