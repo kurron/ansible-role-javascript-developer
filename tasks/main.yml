@@ -65,6 +65,7 @@
       global: yes
       state: present
   loop:
+  - "@aws-amplify/cli"
   - "yo"
   - "bower"
   - "grunt-cli"

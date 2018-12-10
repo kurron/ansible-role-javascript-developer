@@ -1,4 +1,4 @@
 ---
 - hosts: localhost
   roles:
-  - role: kurron.javascript-developer
+  - { role: kurron.javascript-developer, javascript_webstorm_install: false }
